@@ -24,6 +24,16 @@ docs/PROJECT_STATE.md
 docs/SESSION_HANDOFF.md
 ```
 
+## Task authoring
+
+Learning tasks should follow `docs/TASK_AUTHORING_PROTOCOL.md`.
+
+Task briefs should use `templates/task-template.md`.
+
+Before implementation, the repository owner should prepare a planning response using `templates/task-planning-template.md`.
+
+Branch name, PR title, package name, and API design should be proposed by the repository owner as part of the learning process.
+
 ## Branch naming
 
 Use simple branch names without external ticket numbers.
