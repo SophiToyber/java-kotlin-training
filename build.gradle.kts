@@ -1,20 +1,34 @@
-plugins {
-    id("java")
+import org.gradle.api.plugins.JavaPluginExtension
+import org.gradle.jvm.toolchain.JavaLanguageVersion
+
+allprojects {
+    group = "dev.training"
+    version = "0.1.0-SNAPSHOT"
 }
 
-group = "org.example"
-version = "1.0-SNAPSHOT"
+val javaVersion = libs.versions.java.get().toInt()
+val junitBom = libs.junit.bom
+val junitJupiter = libs.junit.jupiter
+val assertjCore = libs.assertj.core
+val junitPlatformLauncher = libs.junit.platform.launcher
 
-repositories {
-    mavenCentral()
-}
+subprojects {
+    apply(plugin = "java")
 
-dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-}
+    extensions.configure<JavaPluginExtension> {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(javaVersion))
+        }
+    }
 
-tasks.test {
-    useJUnitPlatform()
+    dependencies {
+        "testImplementation"(platform(junitBom))
+        "testImplementation"(junitJupiter)
+        "testImplementation"(assertjCore)
+        "testRuntimeOnly"(junitPlatformLauncher)
+    }
+
+    tasks.withType<Test>().configureEach {
+        useJUnitPlatform()
+    }
 }
